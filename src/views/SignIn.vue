@@ -115,11 +115,15 @@ export default {
         async loadUserProfile (uid) {
             const docRef = doc(firestoreDb, "users", uid)
             const fsDoc = await getDoc(docRef)
+            //necessary to handle user refreshing a page
             sessionStorage.setItem("Profile", JSON.stringify(fsDoc.data()))
-            //const profileCopy = JSON.parse(localStorage.clear())
+            //to retrieve the profile stored in local storage(ctrl+shift+i - network- applications-storage)
+            //const profileCopy = JSON.parse(localStorage.getItem("Profile"))
+            //console.log("profileCopy", profileCopy)
+
             //to clear the content in the local storage(dev tool)
             //localStorage.clear()
-            //console.log("profileCopy", profileCopy)
+            
 
             return fsDoc.data()
         }
