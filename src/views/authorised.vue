@@ -35,6 +35,7 @@ export default {
       sessionStorage.clear()
       alert("signed out")
       this.$router.push("/signin")
+      //
     }
   }
 }
