@@ -10,8 +10,8 @@
                 <img src="@/assets/nihr-logo.svg" height="30">
               </v-col>
 
-              <v-col>
-                <v-app-bar-title>The Participant Research Experience Survey</v-app-bar-title>
+              <v-col cols="auto">
+                <v-app-bar-title> Contacts </v-app-bar-title>
               </v-col>
  
   

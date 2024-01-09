@@ -1,4 +1,5 @@
 <template>
+    <!--
     <v-card width="600" height="400" elevation="2">
         <v-card-title class="text-center">
             Welcome to the Participant Research Experience Survey
@@ -75,9 +76,37 @@
         </v-row>
 
     </v-card>
+-->
+
+<v-card
+      class = "mx-auto"
+      width="300"
+      elevation="2"
+    >
+            <v-row class="justify-center my-2">
+                <v-btn 
+                    class="text-body-1" 
+                    variant="outlined" 
+                    rounded 
+                    size="small" 
+                    width="auto"
+                    @click="signin"
+                >
+                  Sign in
+                </v-btn>
+            </v-row>
+    </v-card>
+
 </template>
 
 
 <script>
+export default {
+    methods: {
+        signin(){
+            this.$router.push("/signin")
+        }
+    }
+}
 
 </script>

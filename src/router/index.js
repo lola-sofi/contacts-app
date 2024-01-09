@@ -3,8 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { getCurrentUser } from '@/firebaseConfig'
 import Home from '@/views/Home.vue'
 import SignIn from '@/views/SignIn.vue'
-
-
+import ContactDetails from '@/views/ContactDetails.vue'
+import Actions from '@/views/Actions.vue'
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -29,7 +29,22 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import ( "@/views/authorised" ),
       meta: { requiresAuth: true }
+    },
+
+    {
+      path: '/contactdetails',
+      name: 'contactdetails',
+      component: () => import ( "@/views/ContactDetails" ),
+      meta: { requiresAuth: true }
+    },
+
+    {
+      path: '/actions',
+      name: 'actions',
+      component: () => import ( "@/views/Actions" ),
+      meta: { requiresAuth: true }
     }
+
   ]
 })
 
@@ -39,7 +54,7 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
   if (requiresAuth && !(await getCurrentUser())) {
-    return '/signIn'
+    return '/signin'
   }
 })
 
