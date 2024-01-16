@@ -1,7 +1,7 @@
 <template>
    <v-app>
         <v-app-bar
-            class="text-none ms-4 text-white"
+            class="text-none ms-2 text-white"
             color="indigo-darken-4"
             >
     
@@ -44,7 +44,7 @@
             </v-row>
         </v-app-bar>
 
-            <v-main class="d-flex align-center justify-center" fill-height>
+            <v-main class="d-flex align-center justify-center">
                 <router-view>
                 </router-view>
             </v-main>

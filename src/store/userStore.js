@@ -7,9 +7,15 @@ import { signInWithEmailAndPassword } from 'firebase/auth'
 export const useUserStore = defineStore('user', {
   state: () => ({
     user: {},
+    mode: ""
   }),
 
   actions: {
+    setMode(val) {
+      console.log("val", val)
+      this.mode = val
+    },
+
     async userSignIn (email, password) { 
       let actionStatus = {status: 'Success', message: ''} 
       await signInWithEmailAndPassword(auth, email, password)

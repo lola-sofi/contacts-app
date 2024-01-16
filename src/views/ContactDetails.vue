@@ -49,10 +49,12 @@
 
 import { firestoreDb } from "@/firebaseConfig"
 import { getDoc, doc } from "firebase/firestore"
+import { useUserStore } from "@/store/userStore"
 
   export default {
     data () {
       return {
+          userStore: useUserStore(),
           firstName: "",
           lastName: "",
           isValid: true,
@@ -68,12 +70,15 @@ import { getDoc, doc } from "firebase/firestore"
               }
             },
 
-    async mounted() {
-      const docRef = doc(firestoreDb, "contacts", "rky6U6jTUOUUORgBwGRTbLIVqvX2")
+    mounted() {
+  
+        console.log("contact", this.userStore.mode)
+      
+      /* const docRef = doc(firestoreDb, "contacts", "rky6U6jTUOUUORgBwGRTbLIVqvX2")
       const fsDoc = await getDoc(docRef)
       console.log("contact", JSON.stringify(fsDoc.data()))
-      this.contact = fsDoc.data()
+      this.contact = fsDoc.data() */
                     }
                   }
-                  
+
 </script>
