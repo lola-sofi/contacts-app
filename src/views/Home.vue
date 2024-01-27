@@ -95,16 +95,46 @@
                   Sign in
                 </v-btn>
             </v-row>
+
+            <v-row class="justify-center my-2">
+                <v-btn 
+                    class="text-body-1" 
+                    variant="outlined" 
+                    rounded 
+                    size="small" 
+                    width="auto"
+                    @click="testCode"
+                >
+                  Test
+                </v-btn>
+            </v-row>
     </v-card>
 
 </template>
 
 
 <script>
+
+import { useAppStore } from '@/store/appStore'
+
 export default {
+    data() {
+        return {
+            appStore: useAppStore()
+        }
+    },
+
     methods: {
         signin(){
             this.$router.push("/signin")
+        },
+
+        testCode() {
+            this.appStore.setUserMessage({ show: true,
+                                           title: "homepage message",
+                                           text: "hello world",
+                                           type: "error"
+                                         }) 
         }
     }
 }

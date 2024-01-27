@@ -69,10 +69,65 @@
                 </v-col>
             </v-row>
         </v-footer>
+
+        <v-dialog
+        v-model="appStore.userMessage.show" 
+        max-width="500"
+        >
+        <v-card>
+          <v-card-title>
+          <div v-if="appStore.userMessage.type==='info'">
+            INFO
+          </div>
+          <div v-if="appStore.userMessage.type==='error'">
+            ERROR
+          </div>
+          {{ appStore.userMessage.title }}
+          </v-card-title>
+          {{ appStore.userMessage.text }}
+          <v-card-actions>
+          
+                <v-btn
+                    class="text-body-1" 
+                    variant="outlined" 
+                    rounded 
+                    size="small" 
+                    width="auto"
+                    @click="closeMessage"
+                >
+                 Close
+                </v-btn>
+           
+          </v-card-actions>
+        </v-card>
+
+        </v-dialog>
   </v-app>
 </template>
 
 
 <script>
-//
+
+import { useAppStore } from './store/appStore'
+export default {
+  data() {
+    return {
+      appStore: useAppStore(),
+    }
+  },
+
+  methods: {
+    closeMessage() {
+      this.appStore.setUserMessage({ 
+                                show: false,
+                                title: "",
+                                text: "",
+                                type: ""
+                             })
+    }
+    
+  }
+}
+
+
 </script>
