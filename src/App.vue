@@ -72,21 +72,39 @@
 
         <v-dialog
         v-model="appStore.userMessage.show" 
-        max-width="500"
+        width="400"
         >
         <v-card>
-          <v-card-title>
-          <div v-if="appStore.userMessage.type==='info'">
-            INFO
-          </div>
-          <div v-if="appStore.userMessage.type==='error'">
-            ERROR
-          </div>
+          <v-card-title class="">
+          <v-icon
+              v-if="appStore.userMessage.type==='info'"
+             icon="mdi-information-outline"
+             aria-hidden="false"
+              color="blue-darken-2" 
+          >
+          mdi-alert-circle-outline
+          </v-icon>
+          <v-icon
+              v-if="appStore.userMessage.type==='error'"
+              prepend-icon="mdi-alert-circle-outline" 
+              aria-hidden="false"
+              color="red-darken-2"
+          >
+          mdi-information-outline
+          </v-icon>
           {{ appStore.userMessage.title }}
           </v-card-title>
+          <v-card-text>
+          <v-row class="justify-center">
+            
           {{ appStore.userMessage.text }}
-          <v-card-actions>
           
+        
+        </v-row>
+      </v-card-text>
+          <v-card-actions class="mt-4">
+          <v-row>
+            <v-col cols="5"></v-col>
                 <v-btn
                     class="text-body-1" 
                     variant="outlined" 
@@ -97,7 +115,7 @@
                 >
                  Close
                 </v-btn>
-           
+              </v-row>
           </v-card-actions>
         </v-card>
 
@@ -118,12 +136,11 @@ export default {
 
   methods: {
     closeMessage() {
-      this.appStore.setUserMessage({ 
-                                show: false,
-                                title: "",
-                                text: "",
-                                type: ""
-                             })
+      this.appStore.setUserMessage({ show: false,
+                                     title: "",
+                                     text: "",
+                                     type: "" 
+                                  })
     }
     
   }

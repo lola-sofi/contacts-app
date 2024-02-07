@@ -133,7 +133,7 @@ export default {
             this.appStore.setUserMessage({ show: true,
                                            title: "homepage message",
                                            text: "hello world",
-                                           type: "error"
+                                           type: "info"
                                          }) 
         }
     }

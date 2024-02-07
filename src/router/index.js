@@ -5,6 +5,7 @@ import Home from '@/views/Home.vue'
 import SignIn from '@/views/SignIn.vue'
 import ContactDetails from '@/views/ContactDetails.vue'
 import Actions from '@/views/Actions.vue'
+import contactlist from '@/views/contactList.vue'
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -39,11 +40,18 @@ const router = createRouter({
     },
 
     {
+      path: '/contactlist',
+      name: 'contactlist',
+      component: () => import ( "@/views/contactList" ),
+      meta: { requiresAuth: true }
+    },
+
+    {
       path: '/actions',
       name: 'actions',
       component: () => import ( "@/views/Actions" ),
       meta: { requiresAuth: true }
-    }
+    },
 
   ]
 })

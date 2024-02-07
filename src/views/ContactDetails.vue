@@ -6,41 +6,44 @@
           <v-card-title>
             Contact details
           </v-card-title>
-                <v-card-text>
-                    <v-form 
+          <v-form 
                       @submit.prevent 
                       v-model="isValid"
+                      ref="anyName"
                     >
+                <v-card-text>
                         <v-text-field
-                            v-model="contact.firstName"
-                            :rules="rules.required"
+                            v-model="contactStore.currentContact.firstName"
+                            :rules="[nameRule.required]"
                             label="First name"
                         >
                         </v-text-field>
                         <v-text-field
-                            v-model="contact.lastName"
-                            :rules="rules.required"
+                            v-model="contactStore.currentContact.lastName"
+                            :rules="[nameRule.required]"
                             label="Last name"
                         >
                         </v-text-field>
                         <v-text-field
-                            v-model="contact.email"
+                            v-model="contactStore.currentContact.email"
                             label="Email"
-                            :rules= "[emailRules.required, emailRules.emailValid]"
+                            
                         >
                         </v-text-field>
-                    </v-form>
                 </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
+                    <v-card-actions class="justify-end">
                             <v-btn 
-                                variant = "outlined" 
+                                variant ="outlined" 
                                 rounded 
                                 class="mt-2 mr-2" 
+                                @click="submit"
+                                type="submit"
+                                :disabled="!isValid"
                             >
                               Submit
                             </v-btn>
                       </v-card-actions>
+                    </v-form>
     </v-card>
 </template>
 
@@ -48,37 +51,55 @@
 <script>
 
 import { firestoreDb } from "@/firebaseConfig"
-import { getDoc, doc } from "firebase/firestore"
-import { useUserStore } from "@/store/userStore"
+import { collection, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc } from "firebase/firestore"
+import { useContactStore } from "@/store/contactStore"
 
   export default {
     data () {
       return {
-          userStore: useUserStore(),
-          firstName: "",
-          lastName: "",
+          contactStore: useContactStore(),
           isValid: true,
-          email: "",
-          contact: {},
-          emailRules: {
+          contact: { active: true, id:"", firstName:"", lastName:"", email:"" },
+        /*emailRules: {
                         required: value => !!value || 'Field is required',
                         emailValid: value => (/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/.test(value) || 
-                                            "Email address format incorrect") },
-          rules: {
-                    required: value => !!value || 'Field is required'},
-        
-              }
-            },
+                                            "Email address format incorrect") 
+            },*/
 
-    mounted() {
-  
-        console.log("contact", this.userStore.mode)
-      
-      /* const docRef = doc(firestoreDb, "contacts", "rky6U6jTUOUUORgBwGRTbLIVqvX2")
-      const fsDoc = await getDoc(docRef)
-      console.log("contact", JSON.stringify(fsDoc.data()))
-      this.contact = fsDoc.data() */
-                    }
-                  }
+          nameRule: {
+                    required: value => !!value || 'Field is required' 
+          },
+      }
+    },
+
+    methods: {
+
+      submit() {
+        if(this.contactStore.mode === "add") {
+          this.addContact()
+          this.$refs.anyName.reset()
+        } else {
+          this.updateContact()
+          }
+      },
+
+      async addContact() {
+        try {
+          //console.log("contact", JSON.stringify(this.contactStore.currentContact))
+          const docRef = await addDoc(collection(firestoreDb, "contacts"), this.contactStore.currentContact)
+          await updateDoc(docRef, { id: docRef.id })
+          window.alert("sucess!")
+          }
+         
+        catch (e) {
+            window.alert("error adding document", e)
+        }
+    },
+
+      async updateContact(docRef) {
+
+      },
+    }
+  }
 
 </script>

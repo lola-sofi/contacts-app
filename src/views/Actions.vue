@@ -50,22 +50,26 @@
 </template>
 
 <script>
-import {useUserStore} from "@/store/userStore"
+import {useContactStore} from "@/store/contactStore"
 
 export default {
     data () {
       return {
-        userStore: useUserStore(), 
+        contactStore: useContactStore(), 
       }
     },
 
     methods: {
-      setContactMode(mode) {
-        console.log("mode", mode)
-        this.userStore.setMode(mode)
-        this.$router.push("/contactdetails")
-      }
+        setContactMode(mode) {
+            console.log("mode", mode)
+            this.contactStore.setMode(mode)
+            if (mode == "add") {
+                this.$router.push("/contactdetails")
+            } else {
+                this.$router.push("/contactlist")  
+              }
+        },   
     }
+}
 
-  }
 </script>
