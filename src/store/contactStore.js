@@ -17,13 +17,13 @@ export const useContactStore = defineStore('contact', {
       this.mode = val
     },
 
-    setCurrentContact (contactData) {
+    setCurrentContact(contactData) {
       this.currentContact = JSON.parse(JSON.stringify(contactData))
     },
 
-    setContacts (contactData) {
+    setContacts(contactData) {
       this.contacts = JSON.parse(JSON.stringify(contactData))
       //console.log("contacts", JSON.stringify(this.contacts))
     },
-  } 
+  }
 })

@@ -9,47 +9,47 @@ import contactlist from '@/views/contactList.vue'
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes: [ 
+  routes: [
     {
       path: '/',
       name: 'Home',
       component: Home,
     },
-  
+
     {
       path: '/signin',
       name: 'signin',
       component: SignIn,
     },
-  
+
     {
       path: '/authorised',
       name: 'authorised',
       // route level code-splitting
       // this generates a separate chunk (Home-[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import ( "@/views/authorised" ),
+      component: () => import("@/views/authorised"),
       meta: { requiresAuth: true }
     },
 
     {
       path: '/contactdetails',
       name: 'contactdetails',
-      component: () => import ( "@/views/ContactDetails" ),
+      component: () => import("@/views/ContactDetails"),
       meta: { requiresAuth: true }
     },
 
     {
       path: '/contactlist',
       name: 'contactlist',
-      component: () => import ( "@/views/contactList" ),
+      component: () => import("@/views/contactList"),
       meta: { requiresAuth: true }
     },
 
     {
       path: '/actions',
       name: 'actions',
-      component: () => import ( "@/views/Actions" ),
+      component: () => import("@/views/Actions"),
       meta: { requiresAuth: true }
     },
 

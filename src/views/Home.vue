@@ -78,38 +78,19 @@
     </v-card>
 -->
 
-<v-card
-      class = "mx-auto"
-      width="300"
-      elevation="2"
-    >
-            <v-row class="justify-center my-2">
-                <v-btn 
-                    class="text-body-1" 
-                    variant="outlined" 
-                    rounded 
-                    size="small" 
-                    width="auto"
-                    @click="signin"
-                >
-                  Sign in
-                </v-btn>
-            </v-row>
+    <v-card class="mx-auto" width="300" elevation="2">
+        <v-row class="justify-center my-2">
+            <v-btn class="text-body-1" variant="outlined" rounded size="small" width="auto" @click="signin">
+                Sign in
+            </v-btn>
+        </v-row>
 
-            <v-row class="justify-center my-2">
-                <v-btn 
-                    class="text-body-1" 
-                    variant="outlined" 
-                    rounded 
-                    size="small" 
-                    width="auto"
-                    @click="testCode"
-                >
-                  Test
-                </v-btn>
-            </v-row>
+        <v-row class="justify-center my-2">
+            <v-btn class="text-body-1" variant="outlined" rounded size="small" width="auto" @click="testCode">
+                Test
+            </v-btn>
+        </v-row>
     </v-card>
-
 </template>
 
 
@@ -125,16 +106,17 @@ export default {
     },
 
     methods: {
-        signin(){
+        signin() {
             this.$router.push("/signin")
         },
 
         testCode() {
-            this.appStore.setUserMessage({ show: true,
-                                           title: "homepage message",
-                                           text: "hello world",
-                                           type: "info"
-                                         }) 
+            this.appStore.setUserMessage({
+                show: true,
+                title: "homepage message",
+                text: "hello world",
+                type: "info"
+            })
         }
     }
 }

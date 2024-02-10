@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 
-export const useAppStore = defineStore ('app', {
+export const useAppStore = defineStore('app', {
   state: () => ({
-    userMessage: { 
-      show: false, 
-      title: '', 
+    userMessage: {
+      show: false,
+      title: '',
       text: '',
       type: ''
     }
