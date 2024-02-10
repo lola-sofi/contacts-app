@@ -36,7 +36,6 @@ import { useAppStore } from "@/store/appStore"
 export default {
   data() {
     return {
-      appStore: useAppStore()
       contactStore: useContactStore(),
       isValid: true,
       contact: { active: true, id: "", firstName: "", lastName: "", email: "" },
