@@ -20,14 +20,14 @@
             </v-card-text>
             <v-card-actions>
                 <v-row class="justify-end mx-6 my-4">
-                    <v-btn :disabled="!isValid" class="text-body-1" color="green-darken-2" variant="outlined" rounded
-                        size="small" width="auto" @click="signIn">
-                        Sign In
-                    </v-btn>
-                    <v-spacer></v-spacer>
                     <v-btn class="text-body-1" variant="outlined" rounded size="small" width="auto" @click="cancelSignIn">
                         Cancel
                     </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn :disabled="!isValid" class="text-body-1" color="green-darken-2" variant="outlined" rounded
+                        size="small" width="auto" @click="signIn">
+                        Sign In
+                    </v-btn>     
                 </v-row>
             </v-card-actions>
         </v-card>

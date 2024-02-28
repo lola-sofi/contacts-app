@@ -6,6 +6,7 @@ import SignIn from '@/views/SignIn.vue'
 import ContactDetails from '@/views/ContactDetails.vue'
 import Actions from '@/views/Actions.vue'
 import contactlist from '@/views/contactList.vue'
+import browseContact from '@/views/browseContact.vue'
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -29,6 +30,13 @@ const router = createRouter({
       // this generates a separate chunk (Home-[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("@/views/authorised"),
+      meta: { requiresAuth: true }
+    },
+
+    {
+      path: '/browseContact',
+      name: 'browsecontact',
+      component: () => import("@/views/browseContact"),
       meta: { requiresAuth: true }
     },
 

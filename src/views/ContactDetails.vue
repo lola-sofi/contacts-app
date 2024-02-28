@@ -36,6 +36,7 @@ import { useAppStore } from "@/store/appStore"
 export default {
   data() {
     return {
+      appStore: useAppStore(),
       contactStore: useContactStore(),
       isValid: true,
       contact: { active: true, id: "", firstName: "", lastName: "", email: "" },
@@ -44,7 +45,6 @@ export default {
                       emailValid: value => (/^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/.test(value) || 
                                           "Email address format incorrect") 
           },*/
-
       nameRule: {
         required: value => !!value || 'Field is required'
       },
@@ -80,27 +80,53 @@ export default {
         //console.log("contact", JSON.stringify(this.contactStore.currentContact))
         const docRef = await addDoc(collection(firestoreDb, "contacts"), this.contactStore.currentContact)
         await updateDoc(docRef, { id: docRef.id })
-        window.alert(this.appStore.setUserMessage ({ show: true,
-                                                              title: "add/edit contact details",
-                                                              text: "Success!",
-                                                              type: "info"
-      })
-        )
+        this.appStore.setUserMessage({
+          show: true,
+          title: "add a new contact",
+          text: "success!",
+          type: "info"
+        })
         this.$router.push("/actions")
       }
       catch (err) {
-        window.alert(err.message)
+        this.appStore.setUserMessage({
+          show: true,
+          title: "add a new contact",
+          text: "email already exists, try editing the contact",
+          type: "error"
+        })
       }
     },
 
     async updateContact() {
       try {
+        const obj = this.contactStore.contacts.find(({ id }) => id === this.contactStore.currentContact.id)
+        if (obj && obj.email !== this.contactStore.currentContact.email) {
+
+          const result= await this.checkDuplicate()
+          if(result !== "success") {
+          throw new Error(result)
+          }
+        }
+        
         const ref = doc(firestoreDb, "contacts", this.contactStore.currentContact.id)
         await updateDoc(ref, this.contactStore.currentContact)
-        window.alert("success")
+        this.appStore.setUserMessage({
+          show: true,
+          title: "update an existing contact",
+          text: "success!",
+          type: "info"
+        })
+      
       }
       catch (err) {
-        window.alert(err.message)
+        this.appStore.setUserMessage({
+          show: true,
+          title: "update error",
+          text: err.message,
+          type: "error"
+        })
+      
       }
     },
 

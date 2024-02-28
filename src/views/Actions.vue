@@ -19,6 +19,14 @@
                 <v-row justify="center">
                     <v-col cols="auto">
                         <v-btn density="comfortable" class="text-body-1" prepend-icon="mdi-plus"
+                            @click="browseContact">
+                            Browse Contact
+                        </v-btn>
+                    </v-col>
+                </v-row>
+                <v-row justify="center">
+                    <v-col cols="auto">
+                        <v-btn density="comfortable" class="text-body-1" prepend-icon="mdi-plus"
                             @click="setContactMode('add')">
                             Add contact
                         </v-btn>
@@ -52,6 +60,10 @@ export default {
     },
 
     methods: {
+        browseContact() {
+      this.$router.push("/browseContact")
+
+      },
         setContactMode(mode) {
             console.log("mode", mode)
             this.contactStore.setMode(mode)
