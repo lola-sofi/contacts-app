@@ -1,13 +1,14 @@
 // Utilities
 import { defineStore } from 'pinia'
 import { firestoreDb } from '@/firebaseConfig'
-import { query, where, onSnapshot, collection } from "firebase/firestore"
+import { query, where, onSnapshot, collection, getDocs, doc, deleteDoc } from "firebase/firestore"
 
 export const useContactStore = defineStore('contact', {
   state: () => ({
     currentContact: {},
     contacts: [],
-    mode: ""
+    mode: "",
+    
   }),
 
   actions: {
@@ -44,5 +45,15 @@ export const useContactStore = defineStore('contact', {
       }
 
     },
+
+    async deleteContact() {
+      try{
+      await deleteDoc(doc(firestoreDb, "contacts", this.currentContact.id))
+      return "success"
+    } catch (err) {
+      return err.message
+
+    }
+  },
   }
 })

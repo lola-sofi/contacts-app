@@ -25,10 +25,8 @@
 </template>
 
 <script>
-
 import { firestoreDb } from "@/firebaseConfig"
 import { useContactStore } from "@/store/contactStore"
-import { collection, getDocs, query, where, onSnapshot } from "firebase/firestore"
 
 
 export default {
@@ -36,7 +34,6 @@ export default {
     return {
       contactStore: useContactStore(),
       selectedContactId: ""
-
     }
   },
 
@@ -49,24 +46,26 @@ export default {
   methods: {
     editContact() {
       if (this.contactStore.mode === "edit") {
-        this.getContacts()
+        this.contactStore.getContacts()
       } else {
         this.addContact()
       }
     },
 
-  
     close() {
       this.$router.push("/actions")
     },
+
+   /* editSelected() {
+      this.contactStore.editSelectedContact()
+    } */
 
     editSelectedContact() {
       const selectedData = this.contactStore.contacts.find(({ id }) => id === this.selectedContactId)
       this.contactStore.setCurrentContact(selectedData)
       this.$router.push("/contactDetails")
-    }
+    } 
   }
 }
-
 
 </script>

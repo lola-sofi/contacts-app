@@ -11,6 +11,10 @@
         </v-text-field>
         <v-text-field v-model="contactStore.currentContact.email" label="Email">
         </v-text-field>
+        <v-row class="pa-3">
+          <v-select v-model="contactStore.currentContact.org" label="select" hint="select an organisation" persistent-hint
+          :items="orgStore.orgs" item-value="Name" item-title="Name" variant="underlined"></v-select>
+        </v-row>
       </v-card-text>
       <v-card-actions>
         <v-btn variant="outlined" rounded class="mt-2 mr-2" @click="cancel">
@@ -32,12 +36,15 @@ import { firestoreDb } from "@/firebaseConfig"
 import { collection, doc, getDocs, setDoc, addDoc, updateDoc, query, where } from "firebase/firestore"
 import { useContactStore } from "@/store/contactStore"
 import { useAppStore } from "@/store/appStore"
+import { useOrgStore } from "@/store/orgStore"
 
 export default {
   data() {
     return {
       appStore: useAppStore(),
       contactStore: useContactStore(),
+      orgStore: useOrgStore(),
+      org: "",
       isValid: true,
       contact: { active: true, id: "", firstName: "", lastName: "", email: "" },
       /*emailRules: {
@@ -55,10 +62,41 @@ export default {
     if (this.contactStore.mode === "add") {
       this.$refs.contactForm.reset()
     }
+
+    if(this.orgStore.orgs.length === 0) {
+    this.loadOrganisations()
+  }
   },
+ 
+
 
   methods: {
 
+    async loadOrganisations() {
+      try {
+        const qryDocs = await getDocs(collection(firestoreDb, "organisations"))
+        if (qryDocs.empty) {
+          throw new Error("unable to get organisations")
+        }
+        const orgData = []
+        qryDocs.forEach((doc) => {
+          orgData.push(doc.data())
+        })
+        this.orgStore.setOrgs(orgData)
+
+      } catch(err) {
+          this.appStore.setUserMessage({
+            show: true,
+            title: "load organisations error",
+            text: err.message,
+            type: "error"
+          }) 
+      }
+    },
+
+
+  
+   
     cancel() {
       this.$router.push("/actions")
     },

@@ -82,6 +82,43 @@
       </v-card>
 
     </v-dialog>
+
+    <v-dialog v-model="appStore.userConfirmation.show" width="400">
+      <v-card>
+        <v-card-title class="">
+          <v-icon icon="mdi-alert-outline" aria-hidden="false"
+            color="orange-darken-2">
+            mdi-alert-outline
+          </v-icon>
+         
+          {{ appStore.userConfirmation.title }}
+        </v-card-title>
+        <v-card-text>
+          <v-row class="justify-center">
+
+            {{ appStore.userConfirmation.text }}
+
+
+          </v-row>
+        </v-card-text>
+        <v-card-actions class="mt-4">
+          <v-row cols="3">
+            <v-col>
+            <v-btn class="text-body-1" variant="outlined" rounded size="small" width="auto" @click="closeYes">
+              Yes
+            </v-btn>
+          </v-col>
+          <v-spacer></v-spacer>
+          <v-col>
+            <v-btn class="text-body-1" variant="outlined" rounded size="small" width="auto" @click="closeNo">
+              No
+            </v-btn>
+          </v-col>
+          </v-row>
+        </v-card-actions>
+      </v-card>
+
+    </v-dialog>
   </v-app>
 </template>
 
@@ -89,12 +126,23 @@
 <script>
 
 import { useAppStore } from './store/appStore'
+import { useContactStore } from './store/contactStore';
+import { firestoreDb } from './firebaseConfig'
+import { collection, getDocs, doc, deleteDoc } from "firebase/firestore"
+
 export default {
   data() {
     return {
       appStore: useAppStore(),
+      contactStore: useContactStore(),
+
     }
   },
+
+ /* mounted() {
+    this.loadOrganisations()
+  },
+  */
 
   methods: {
     closeMessage() {
@@ -104,9 +152,62 @@ export default {
         text: "",
         type: ""
       })
-    }
+    },
 
-  }
+    closeNo(){
+      this.appStore.setUserConfirmation({
+        show: false,
+        title: "",
+        text: "",
+    })
+  },
+
+    async closeYes() {
+      this.closeNo()
+        const result = await this.contactStore.deleteContact()
+          if(result !== "success") {
+            this.appStore.setUserMessage({
+              show: true,
+              title: "error",
+              text: result,
+            }) 
+          } else {
+              this.appStore.setUserMessage({
+                show: true,
+                title: "success",
+                text:"contact deleted",
+              }) 
+            }
+    },
+    
+
+    
+
+   /* async loadOrganisations() {
+      try {
+        const qryDocs = await getDocs(collection(firestoreDb, "organisations"))
+        if (qryDocs.empty) {
+          throw new Error("unable to get organisations")
+        }
+        const orgData = []
+        qryDocs.forEach((doc) => {
+          orgData.push(doc.data())
+        })
+        this.appStore.setOrgs(orgData)
+
+      } catch(err) {
+          this.appStore.setUserMessage({
+            show: true,
+            title: "load organisations error",
+            text: err.message,
+            type: "error"
+          }) 
+      }
+    },
+
+*/
+  },
+
 }
 
 
